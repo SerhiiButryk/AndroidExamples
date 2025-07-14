@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.compose.test.data
 
 data class Message(val author: String = "", val body: String = "")
 

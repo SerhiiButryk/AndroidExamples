@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.compose.test.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -20,12 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.compose.test.ui.theme.AppTheme
 
 @Preview(showSystemUi = true, device = "spec:parent=pixel_c,orientation=portrait")
 @Composable
 fun SampleUI() {
-    MyApplicationTheme {
+    AppTheme {
         Surface(
             color = MaterialTheme.colorScheme.secondaryContainer,
             modifier = Modifier.padding(10.dp),

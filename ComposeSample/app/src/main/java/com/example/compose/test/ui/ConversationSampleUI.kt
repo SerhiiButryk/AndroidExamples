@@ -1,4 +1,4 @@
-package com.example.myapplication.ui
+package com.example.compose.test.ui
 
 import android.content.res.Configuration
 import android.util.Log
@@ -30,10 +30,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.myapplication.R
-import com.example.myapplication.data.Message
-import com.example.myapplication.data.SampleData
-import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.compose.test.R
+import com.example.compose.test.data.Message
+import com.example.compose.test.data.SampleData
+import com.example.compose.test.ui.theme.AppTheme
 
 @Composable
 fun Conversation(modifier: Modifier = Modifier, messages: List<Message>) {
@@ -48,7 +48,7 @@ fun Conversation(modifier: Modifier = Modifier, messages: List<Message>) {
 @Preview
 @Composable
 private fun PreviewConversation() {
-    MyApplicationTheme {
+    AppTheme {
         Surface {
             Conversation(messages = SampleData.conversationSample)
         }
@@ -65,7 +65,7 @@ fun MessageCard(modifier: Modifier = Modifier, message: Message) {
         Log.i("MainActivity", "MessageCard: add new row")
 
         Image(
-            painter = painterResource(id = R.drawable.profile_picture),
+            painter = painterResource(id = R.drawable.ic_launcher_background),
             contentDescription = "",
             modifier = Modifier
                 .size(40.dp)
@@ -107,7 +107,7 @@ fun MessageCard(modifier: Modifier = Modifier, message: Message) {
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewMessageCard(modifier: Modifier = Modifier) {
-    MyApplicationTheme {
+    AppTheme {
         Surface {
             MessageCard(message = Message("Author", "Some body"))
         }
