@@ -92,5 +92,4 @@ lint/tmp/
 **/.classpath
 **/.externalNativeBuild/
 **/build/
-**/gradle/
 **/.vscode/
