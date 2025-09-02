@@ -4,17 +4,13 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+apply(from = "${rootDir}/../configs/versions.gradle")
+
 android {
     namespace = "com.example.flowsampleapp"
-    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.flowsampleapp"
-        minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,13 +22,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
     buildFeatures {
         compose = true
@@ -49,8 +38,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.coroutinesandroid)
-    implementation(libs.navigation)
+    implementation(libs.androidx.navigation.compose.android)
 
     testImplementation(libs.junit)
     testImplementation(libs.turbine)

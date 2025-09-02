@@ -1,18 +1,15 @@
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
 }
+
+apply(from = "${rootDir}/../configs/versions.gradle")
 
 android {
     namespace = "com.example.app"
-    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.example.app"
-        minSdk = 28
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -25,21 +22,14 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
 
     // Biometric library
-    implementation("androidx.biometric:biometric:1.1.0")
+    implementation(libs.androidx.biometric)
 
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
 }

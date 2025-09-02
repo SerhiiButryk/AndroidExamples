@@ -4,20 +4,29 @@ import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import com.example.myapp.R
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
+import androidx.compose.ui.unit.sp
+import com.example.myapp2.theme.AppTheme
 
-class ExposedToWholeWorldActivity : AppCompatActivity() {
+class ExposedToWholeWorldActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_exposed_to_whole_world)
 
-        Log.i("MyApp2", "ExposedToWholeWorldActivity.onCreate()")
+        setContent {
+            AppTheme {
+                Column {
+                    Text(text = "ExposedToWholeWorldActivity", fontSize = 20.sp)
+                }
+            }
+        }
+
+        Log.i("LifecycleSample", "ExposedToWholeWorldActivity.onCreate()")
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -38,7 +47,7 @@ class ExposedToWholeWorldActivity : AppCompatActivity() {
         for (task in listTasks) {
 
             val isRunning = task.taskInfo.isRunning
-            Log.i("MyApp2", "isMyProcessInUIForeground: isRunning = $isRunning")
+            Log.i("LifecycleSample", "isMyProcessInUIForeground: isRunning = $isRunning")
         }
 
         if (appProcesses != null && appProcesses.size > 0) {
@@ -46,7 +55,7 @@ class ExposedToWholeWorldActivity : AppCompatActivity() {
 
             while (iter.hasNext()) {
                 val appProcess = iter.next() as ActivityManager.RunningAppProcessInfo
-                Log.i("MyApp2", "isMyProcessInUIForeground: ${appProcess.processName} ${appProcess.importance} ${appProcess.pid}")
+                Log.i("LifecycleSample", "isMyProcessInUIForeground: ${appProcess.processName} ${appProcess.importance} ${appProcess.pid}")
             }
         }
 

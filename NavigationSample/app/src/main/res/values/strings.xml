@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">App</string>
-
-    <string name="fragment_title_1">Screen one</string>
-    <string name="fragment_title_2">Screen two</string>
-</resources>

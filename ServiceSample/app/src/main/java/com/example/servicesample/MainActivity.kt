@@ -8,19 +8,33 @@ import android.app.ActivityManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.ServiceConnection
-import android.os.*
+import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
 import android.util.Log
-import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.example.servicesample.MyApplication.Companion.APP_TAG
 import com.example.servicesample.services.BackgroundService
 import com.example.servicesample.services.BackgroundService.*
 import com.example.servicesample.services.ForegroundService
+import com.example.servicesample.theme.AppTheme
 
 /**
  * Activity which displays UI and starts and stops Services.
  */
-class MainActivity : AppCompatActivity() {
+
+private const val TAG = "$APP_TAG-MainActivity"
+
+class MainActivity : ComponentActivity() {
 
     private var isServiceBound = false
     private var isBindServiceRequested = false
@@ -47,96 +61,102 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        initActivity()
-        Log.i(TAG, "onCreate: activity is created - $this")
+        setContent {
+            AppTheme {
+
+                val context = LocalContext.current
+
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    /**
+                     * Launch background service
+                     */
+                    Button(onClick = {
+                        val intent = BackgroundService.getIntentForServiceLaunch(context = context)
+                        startService(intent)
+                    }) {
+                        Text("Launch background service")
+                    }
+
+                    /**
+                     * Launch foreground service
+                     */
+                    Button(onClick = {
+                        val intent = ForegroundService.getIntentForServiceLaunch(context = context)
+                        val componentName = context.startForegroundService(intent)
+                        Log.i(TAG, "Launched foreground service: $componentName")
+                    }) {
+                        Text("Launch foreground service")
+                    }
+
+                    /**
+                     * Stop foreground service
+                     */
+                    Button(onClick = {
+                        val intent = ForegroundService.getIntentForServiceLaunch(context = context)
+                        val success = stopService(intent)
+                        Log.i(TAG, "Stop foreground service: $success")
+                    }) {
+                        Text("Start foreground service")
+                    }
+
+                    /**
+                     * Stop bound service
+                     */
+                    Button(onClick = {
+                        val intent = BackgroundService.getIntentForServiceLaunch(context = context)
+                        val result = bindService(intent, backgroundServiceConnection, Context.BIND_AUTO_CREATE)
+                        if (result) {
+                            Log.i(TAG, "Binding is successful")
+                        } else {
+                            Log.e(TAG, "Binding is failed")
+                        }
+                        // Telling that we need to call unbind. 'Unbind' must be called in any case (whether
+                        // result is true or false)
+                        isBindServiceRequested = true
+                    }) {
+                        Text("Stop bound service")
+                    }
+
+                    /**
+                     * Unbind bound service
+                     */
+                    Button(onClick = {
+                        // If Service was not bound, 'IllegalArgumentException' exception is thrown
+                        // with message - "Service not registered: ..."
+                        if (isBindServiceRequested) {
+                            unbindService(backgroundServiceConnection)
+                            Log.i(TAG, "Unbind is called")
+                        } else {
+                            Log.i(TAG, "Service is not bound")
+                        }
+                    }) {
+                        Text("Unbind bound service")
+                    }
+
+                    /**
+                     * Log info
+                     */
+                    Button(onClick = {
+                        logRunningServicesInfo()
+                    }) {
+                        Text("Log info")
+                    }
+
+
+                }
+            }
+        }
+        Log.i(TAG, "onCreate: created - $this")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i(TAG, "onDestroy: activity is destroyed - $this")
-    }
-
-    private fun initActivity() {
-        /**
-         * Launch background service
-         */
-        findViewById<Button>(R.id.start_started_service_btn).setOnClickListener {
-            val intent = BackgroundService.getIntentForServiceLaunch(this)
-            startService(intent)
-        }
-
-        /**
-         * Launch foreground service
-         */
-        findViewById<Button>(R.id.start_foreground_service).setOnClickListener {
-            val intent = ForegroundService.getIntentForServiceLaunch(this)
-            val componentName = startForegroundService(intent)
-            Log.i(TAG, "Launched foreground service: $componentName")
-        }
-
-        /**
-         * Stop foreground service
-         */
-        findViewById<Button>(R.id.stop_foreground_service).setOnClickListener {
-            val intent = ForegroundService.getIntentForServiceLaunch(this)
-            val success = stopService(intent)
-            Log.i(TAG, "Stop foreground service: $success")
-        }
-
-        /**
-         * Launch bound service
-         */
-        findViewById<Button>(R.id.start_boundh_service_btn).setOnClickListener {
-            val intent = BackgroundService.getIntentForServiceLaunch(this)
-            val result = bindService(intent, backgroundServiceConnection, Context.BIND_AUTO_CREATE)
-            if (result) {
-                Log.i(TAG, "Binding is successful")
-            } else {
-                Log.e(TAG, "Binding is failed")
-            }
-            // Telling that we need to call unbind. 'Unbind' must be called in any case (whether
-            // result is true or false)
-            isBindServiceRequested = true
-        }
-
-        /**
-         * Send work to a bound service
-         */
-        findViewById<Button>(R.id.send_work_to_service).setOnClickListener {
-            if (serviceHandler != null) {
-                // Send some message to service to do some work
-                val message = Message.obtain()
-                message.what = BackgroundService.MESSAGE_DO_WORK
-                // Send message to service
-                serviceHandler?.sendMessage(message)
-
-                Log.i(TAG, "Message to service $serviceName is sent")
-            } else {
-                Log.e(TAG, "Failed to send message, ref is null")
-            }
-        }
-
-        /**
-         * Unbind service
-         */
-        findViewById<Button>(R.id.unbind_service).setOnClickListener{
-            // If Service was not bound, 'IllegalArgumentException' exception is thrown
-            // with message - "Service not registered: ..."
-            if (isBindServiceRequested) {
-                unbindService(backgroundServiceConnection)
-                Log.i(TAG, "Unbind is called")
-            } else {
-                Log.i(TAG, "Service is not bound")
-            }
-        }
-
-        /**
-         * Log debug info
-         */
-        findViewById<Button>(R.id.log_service_info).setOnClickListener{
-            logRunningServicesInfo()
-        }
+        Log.i(TAG, "onDestroy: destroyed - $this")
     }
 
     // Log currently running Services on Device
@@ -157,7 +177,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        private const val TAG = "$APP_TAG-MainActivity"
-    }
 }

@@ -14,7 +14,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.i(TAG, "onCreate: application is created - $this")
+        Log.i(TAG, "onCreate: created - $this")
     }
 
     companion object {
