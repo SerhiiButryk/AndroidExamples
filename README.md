@@ -1,10 +1,10 @@
 # Android Samples
 
-This repository cointains samples for modern android development. 
+This repository cointains samples of modern android development. 
 
 # Android samples list
 
-- **'FragmentSample'** app sample demonstrates:
+- **'FragmentSample'** app sample:
 
     - Fragment lifecycle 
     - Cominucation between Activity, Frgaments and ViewModel
@@ -13,32 +13,20 @@ This repository cointains samples for modern android development.
     - Testing of fragments using FragmnetSenerio
     - Testing of activities using ActivityScenario
 
-- **'ServiceSample'** app sample demonstrates:
+- **'ServiceSample'** app sample:
 
     - Background Service
     - Bound Service
     - Foreground Service
 
-- **'NavigationSample'** app sample demonstrates:
-
-    - Using navigation to go from one to another direction
-
-- **'HandlerLooperSample'** app sample demonstrates:
-
-    - Using looper and handler to implement a thread with message queue
-
-- **'PersonContactsSample'** app sample demonstrates:
-
-    - Using navigation to work with view model which is scoped to navigation graph  
-
-- **'ComposeSample'** app sample demonstrates:
+- **'ComposeSample'** app sample:
     
-    - Using Compose to implement UI
+    - Simple UI with Compose
 
-- **'CoroutinesSample'** app sample demonstrates:
+- **'CoroutinesSample'** app sample:
 
-    - Using coroutines in Android
+    - Simple use cases
 
 - **'AIDLSample'** app sample demonstrates:
 
-    - Using AIDL in Android to perform IPC
+    - AIDL in Android to perform IPC
