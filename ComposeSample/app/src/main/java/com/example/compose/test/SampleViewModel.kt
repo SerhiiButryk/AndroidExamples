@@ -1,4 +1,4 @@
-package com.example.compose.test.ui
+package com.example.compose.test
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
+/**
+ * Sample View Model example
+ */
 class SampleViewModel : ViewModel() {
 
     private val _stateFlow = MutableStateFlow(SampleData())
@@ -20,10 +23,14 @@ class SampleViewModel : ViewModel() {
     val sampleDataFlow = flow {
         while (true) {
             // Generate new data
-            emit(SampleData(listOf(
-                "1. Text with button",
-                "2. Column alignment"
-            )))
+            emit(
+                SampleData(
+                    listOf(
+                        "1. Text with button",
+                        "2. Column alignment"
+                    )
+                )
+            )
             Log.i("MainActivity", "sampleDataFlow: sent new value")
             // Only once
             break

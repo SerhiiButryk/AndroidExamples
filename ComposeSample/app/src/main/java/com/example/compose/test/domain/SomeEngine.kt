@@ -3,6 +3,9 @@ package com.example.compose.test.domain
 import android.util.Log
 import javax.inject.Inject
 
+/**
+ * Client usage of Dagger injection framework
+ */
 class SomeEngine @Inject constructor() {
 
     @Inject

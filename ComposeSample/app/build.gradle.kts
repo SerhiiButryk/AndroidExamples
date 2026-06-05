@@ -34,6 +34,8 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 
+    implementation(libs.kotlinx.collections.immutable)
+
     implementation(libs.androidx.adaptive)
     implementation(libs.androidx.adaptive.navigation)
     implementation(libs.androidx.adaptive.layout)

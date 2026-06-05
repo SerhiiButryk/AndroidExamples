@@ -21,10 +21,19 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
+
     buildFeatures {
         compose = true
+    }
+
+    // A compiler report for composable functions. Can be used for stable/unstable class/func checks.
+    // Run 'assemble' task in release mode to see a report.
+    composeCompiler {
+        reportsDestination = layout.buildDirectory.dir("compose_compiler")
+        metricsDestination = layout.buildDirectory.dir("compose_compiler")
     }
 }
 
