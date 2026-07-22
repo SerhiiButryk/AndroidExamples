@@ -1,4 +1,4 @@
-package com.example.myapplication.network
+package com.example.myapplication.net
 
 import android.util.Log
 import kotlinx.coroutines.CancellationException

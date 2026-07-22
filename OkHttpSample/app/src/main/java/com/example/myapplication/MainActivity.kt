@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.myapplication.network.NetworkTaskManager
+import com.example.myapplication.net.NetworkTaskManager
 import com.example.myapplication.ui.MainUI
 
 class MainActivity : ComponentActivity() {

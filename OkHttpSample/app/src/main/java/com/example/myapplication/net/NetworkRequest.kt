@@ -1,4 +1,4 @@
-package com.example.myapplication.network
+package com.example.myapplication.net
 
 import kotlinx.serialization.Serializable
 import retrofit2.Call

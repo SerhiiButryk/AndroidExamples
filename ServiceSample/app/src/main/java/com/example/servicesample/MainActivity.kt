@@ -31,10 +31,9 @@ import com.example.servicesample.theme.AppTheme
 /**
  * Activity which displays UI and starts and stops Services.
  */
-
-private const val TAG = "$APP_TAG-MainActivity"
-
 class MainActivity : ComponentActivity() {
+
+    val TAG = "$APP_TAG-MainActivity"
 
     private var isServiceBound = false
     private var isBindServiceRequested = false
